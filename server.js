@@ -25,8 +25,11 @@ app.use((req, res, next) => {
 
 // Fungsi untuk mendapatkan konfigurasi project
 function getProjectConfig(projectName) {
-    const projectPath = process.env[`${projectName.toUpperCase()}_PATH`];
-    const projectCommands = process.env[`${projectName.toUpperCase()}_COMMANDS`];
+    // Normalize project name: convert dash to underscore and uppercase
+    const normalizedName = projectName.replace(/-/g, '_').toUpperCase();
+    
+    const projectPath = process.env[`${normalizedName}_PATH`];
+    const projectCommands = process.env[`${normalizedName}_COMMANDS`];
     
     if (!projectPath || !projectCommands) {
         return null;
